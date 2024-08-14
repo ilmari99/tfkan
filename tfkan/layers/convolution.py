@@ -157,6 +157,8 @@ class ConvolutionKAN(Layer, LayerKAN):
     
     @classmethod
     def from_config(cls, config):
+        if "rank" in config:
+            rank = config.pop("rank")
         return cls(**config)
 
 class Conv2DKAN(ConvolutionKAN):
@@ -187,7 +189,7 @@ class Conv2DKAN(ConvolutionKAN):
 
     def _check_and_reshape_inputs(self, inputs):
         shape = tf.shape(inputs)
-        ndim = len(shape)
+        ndim = 4#len(shape)
         try:
             assert ndim == 4
         except AssertionError:
@@ -243,7 +245,7 @@ class Conv3DKAN(ConvolutionKAN):
     
     def _check_and_reshape_inputs(self, inputs):
         shape = tf.shape(inputs)
-        ndim = len(shape)
+        ndim = 5#len(shape)
         try:
             assert ndim == 5
         except AssertionError:
@@ -298,7 +300,7 @@ class Conv1DKAN(ConvolutionKAN):
 
     def _check_and_reshape_inputs(self, inputs):
         shape = tf.shape(inputs)
-        ndim = len(shape)
+        ndim = 3#len(shape)
         try:
             assert ndim == 3
         except AssertionError:
