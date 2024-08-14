@@ -122,7 +122,7 @@ class DenseKAN(Layer, LayerKAN):
     
     def _check_and_reshape_inputs(self, inputs):
         shape = tf.shape(inputs)
-        ndim = len(shape)
+        ndim = 2#len(shape)
         try:
             assert ndim >= 2
         except AssertionError:
@@ -217,7 +217,7 @@ class DenseKAN(Layer, LayerKAN):
             "spline_order": self.spline_order,
             "grid_range": self.grid_range,
             "spline_initialize_stddev": self.spline_initialize_stddev,
-            "basis_activation": self.basis_activation
+            "basis_activation": tf.keras.activations.serialize(self.basis_activation)
         })
 
         return config
