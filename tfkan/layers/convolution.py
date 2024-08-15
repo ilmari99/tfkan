@@ -188,17 +188,19 @@ class Conv2DKAN(ConvolutionKAN):
         super(Conv2DKAN, self).__init__(rank=2, filters=filters, kernel_size=kernel_size, strides=strides, padding=padding, use_bias=use_bias, kan_kwargs=kan_kwargs, **kwargs)
 
     def _check_and_reshape_inputs(self, inputs):
-        shape = tf.shape(inputs)
-        ndim = tf.size(shape) # 4
-        try:
-            assert ndim == 4
-        except AssertionError:
-            raise ValueError(f"expected min_ndim=4, found ndim={ndim}. Full shape received: {shape}")
-
-        try:
-            assert inputs.shape[-1] == self._in_channels
-        except AssertionError:
-            raise ValueError(f"expected last dimension of inputs to be {self._in_channels}, found {shape[-1]}")
+        shape = inputs.get_shape()
+        ndim = len(shape)
+        
+        # The input should have (batch_size, spatial, channels)
+        tf.debugging.assert_equal(ndim,
+                                  4,
+                                  f"Expected min_ndim=4, found ndim={ndim}. Full shape received: {shape}.",
+                                  )
+        
+        tf.debugging.assert_equal(inputs.shape[-1],
+                                  self._in_channels,
+                                  f"Expected last dimension of inputs to be {self._in_channels}, found {shape[-1]}",
+        )
         
         # reshape the inputs into patches
         # so we can transform the convolution into a dense layer
@@ -244,17 +246,19 @@ class Conv3DKAN(ConvolutionKAN):
         super(Conv3DKAN, self).__init__(rank=3, filters=filters, kernel_size=kernel_size, strides=strides, padding=padding, use_bias=use_bias, kan_kwargs=kan_kwargs, **kwargs)
     
     def _check_and_reshape_inputs(self, inputs):
-        shape = tf.shape(inputs)
-        ndim = tf.size(shape) # 5
-        try:
-            assert ndim == 5
-        except AssertionError:
-            raise ValueError(f"expected min_ndim=5, found ndim={ndim}. Full shape received: {shape}")
-
-        try:
-            assert inputs.shape[-1] == self._in_channels
-        except AssertionError:
-            raise ValueError(f"expected last dimension of inputs to be {self._in_channels}, found {shape[-1]}")
+        shape = inputs.get_shape()
+        ndim = len(shape)
+        
+        # The input should have (batch_size, spatial, channels)
+        tf.debugging.assert_equal(ndim,
+                                  5,
+                                  f"Expected min_ndim=5, found ndim={ndim}. Full shape received: {shape}.",
+                                  )
+        
+        tf.debugging.assert_equal(inputs.shape[-1],
+                                  self._in_channels,
+                                  f"Expected last dimension of inputs to be {self._in_channels}, found {shape[-1]}",
+        )
         
         # reshape the inputs into patches
         # so we can transform the convolution into a dense layer
@@ -299,17 +303,19 @@ class Conv1DKAN(ConvolutionKAN):
         super(Conv1DKAN, self).__init__(rank=1, filters=filters, kernel_size=kernel_size, strides=strides, padding=padding, use_bias=use_bias, kan_kwargs=kan_kwargs, **kwargs)
 
     def _check_and_reshape_inputs(self, inputs):
-        shape = tf.shape(inputs)
-        ndim = tf.size(shape) # 3
-        try:
-            assert ndim == 3
-        except AssertionError:
-            raise ValueError(f"expected min_ndim=3, found ndim={ndim}. Full shape received: {shape}")
-
-        try:
-            assert inputs.shape[-1] == self._in_channels
-        except AssertionError:
-            raise ValueError(f"expected last dimension of inputs to be {self._in_channels}, found {shape[-1]}")
+        shape = inputs.get_shape()
+        ndim = len(shape)
+        
+        # The input should have (batch_size, spatial, channels)
+        tf.debugging.assert_equal(ndim,
+                                  3,
+                                  f"Expected min_ndim=3, found ndim={ndim}. Full shape received: {shape}.",
+                                  )
+        
+        tf.debugging.assert_equal(inputs.shape[-1],
+                                  self._in_channels,
+                                  f"Expected last dimension of inputs to be {self._in_channels}, found {shape[-1]}",
+        )
         
         # reshape the inputs into patches
         # so we can transform the convolution into a dense layer
