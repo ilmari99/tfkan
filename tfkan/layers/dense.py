@@ -122,7 +122,7 @@ class DenseKAN(Layer, LayerKAN):
     
     def _check_and_reshape_inputs(self, inputs):
         shape = tf.shape(inputs)
-        ndim = 2#len(shape)
+        ndim = tf.size(shape)
         try:
             assert ndim >= 2
         except AssertionError:
