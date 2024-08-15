@@ -189,7 +189,7 @@ class Conv2DKAN(ConvolutionKAN):
 
     def _check_and_reshape_inputs(self, inputs):
         shape = tf.shape(inputs)
-        ndim = 4#len(shape)
+        ndim = tf.size(shape) # 4
         try:
             assert ndim == 4
         except AssertionError:
@@ -245,7 +245,7 @@ class Conv3DKAN(ConvolutionKAN):
     
     def _check_and_reshape_inputs(self, inputs):
         shape = tf.shape(inputs)
-        ndim = 5#len(shape)
+        ndim = tf.size(shape) # 5
         try:
             assert ndim == 5
         except AssertionError:
@@ -300,7 +300,7 @@ class Conv1DKAN(ConvolutionKAN):
 
     def _check_and_reshape_inputs(self, inputs):
         shape = tf.shape(inputs)
-        ndim = 3#len(shape)
+        ndim = tf.size(shape) # 3
         try:
             assert ndim == 3
         except AssertionError:
